@@ -2,7 +2,7 @@ from pkg_resources import resource_filename
 from types import ModuleType
 from PyKomoran import Komoran
 from konlpy.tag import Mecab
-from transformers import BertTokenizer
+from transformers import BertTokenizer, AutoTokenizer
 
 import os
 # try:
@@ -22,6 +22,8 @@ class Tokenizer:
         elif tokenizer_name == "subword":
             self.tokenizer = BertTokenizer(resource_filename(__package__, "vocab_noised.txt"), do_lower_case=False)
         self.tokenizer_name = tokenizer_name
+        else:
+            self.tokenizer = AutoTokenizer.from_pretrained("monologg/koelectra-small-v3-discriminator")
 
     def tokenize(self, text):
         if self.tokenizer_name == "komoran":
